@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="login_background.png" />
+    <None Remove="logo.png" />
+    <None Remove="menu_background.jpg" />
+    <None Remove="menu_background.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Octokit" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="resources\menu_background.jpg" />
+    <Resource Include="resources\logo.png" />
+    <Resource Include="resources\login_background.png" />
+  </ItemGroup>
+
+</Project>
