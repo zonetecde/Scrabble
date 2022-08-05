@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Scrabble"
         mc:Ignorable="d"
-        Title="Scrabble" MinHeight="700" MinWidth="933" WindowStartupLocation="CenterScreen" WindowState="Maximized" SizeToContent="Manual" SizeChanged="Window_SizeChanged" Loaded="Window_Loaded">
+        Title="Scrabble" MinHeight="700" MinWidth="933" WindowStartupLocation="CenterScreen" WindowState="Maximized" FontFamily="Gill Sans MT" SizeToContent="Manual" SizeChanged="Window_SizeChanged" Loaded="Window_Loaded" >
     <Grid>
         <Grid Visibility="Visible" x:Name="grid_Game">
             <StackPanel x:Name="stackPanel_leftPart" Width="200" HorizontalAlignment="Left" Background="#FFFBE3E3">
@@ -15,7 +15,7 @@
             <WrapPanel Width="512" Height="512" x:Name="gameBoard" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF212121"/>
 
             <StackPanel x:Name="stackPanel_rightPart" Width="200" HorizontalAlignment="Right"  Background="#FFFBE3E3">
-
+                
             </StackPanel>
         </Grid>
 
@@ -26,20 +26,36 @@
                 </Border.Background>
                 <Grid>
                     <Image Source="resources/logo.png" Height="224" VerticalAlignment="Top" />
-                    <Button HorizontalAlignment="Center" Content="Trouver une partie" VerticalAlignment="Top" Height="100" Width="400" Background="White" BorderBrush="Black" FontFamily="Gill Sans MT" FontSize="30" VerticalContentAlignment="Center" Margin="0,229,0,0" Click="Button_TrouverUnePartie_Click" >
+                    <Button HorizontalAlignment="Center" Content="Trouver une partie" VerticalAlignment="Top" Height="100" Width="400" Background="White" BorderBrush="Black"  FontSize="30" VerticalContentAlignment="Center" Margin="0,229,0,0" Click="Button_TrouverUnePartie_Click" >
                         <Button.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="20"/>
                             </Style>
                         </Button.Resources>
                     </Button>
-                    <Button HorizontalAlignment="Center" Content="Partie privée" VerticalAlignment="Top" Height="100" Width="400" Background="White" BorderBrush="Black" FontFamily="Gill Sans MT" FontSize="30" VerticalContentAlignment="Center" Margin="0,334,0,0">
+                    <Button HorizontalAlignment="Center" Content="Partie privée" VerticalAlignment="Top" Height="100" Width="400" Background="White" BorderBrush="Black"  FontSize="30" VerticalContentAlignment="Center" Margin="0,334,0,0">
                         <Button.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="20"/>
                             </Style>
                         </Button.Resources>
                     </Button>
+
+                    <Border CornerRadius="50" x:Name="Grid_nbJoueur" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#7F000000" Visibility="Hidden">
+                        <Border Width="500" Height="200" BorderBrush="Black" BorderThickness="5,5,5,5">
+                            <Grid>
+                                <Grid.Background>
+                                    <ImageBrush ImageSource="/resources/menu_background.jpg"/>
+                                </Grid.Background>
+
+                                <Label Content="Combien de joueur(s) ?" VerticalAlignment="Top" HorizontalAlignment="Center"  FontSize="35" Margin="0,20,0,0"/>
+                                <Button Width="100" Height="100" Margin="73,71,317,19" Content="2" Background="#7F000000" Foreground="White" FontSize="35" Click="Button_SelectNumberOfPlayer_Click"  />
+                                <Button Width="100" Height="100" Margin="195,71,195,19" Content="3" Background="#7F000000" Foreground="White" FontSize="35" Click="Button_SelectNumberOfPlayer_Click" />
+                                <Button Width="100" Height="100" Margin="317,71,73,19" Content="4" Background="#7F000000" Foreground="White" FontSize="35" Click="Button_SelectNumberOfPlayer_Click" />
+                            </Grid>
+                        </Border>
+                        
+                    </Border>
                 </Grid>
             </Border>
 
@@ -51,16 +67,16 @@
             </Grid.Background>
             <Image Source="resources/logo.png" Height="300" VerticalAlignment="Top" Margin="0,0,0,0" />
 
-            <Label Content="Bienvenue !" FontSize="70" FontFamily="Gill Sans MT" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,70"/>
-            <Label Content="Entrez votre pseudo :" FontSize="55" FontFamily="Gill Sans MT" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,75,0,0"/>
-            <TextBox x:Name="textBox_pseudo" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,250,0,0" Height="80" Width="400" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Gill Sans MT" FontSize="40">
+            <Label Content="Bienvenue !" FontSize="70"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,70"/>
+            <Label Content="Entrez votre pseudo :" FontSize="55"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,75,0,0"/>
+            <TextBox x:Name="textBox_pseudo" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,250,0,0" Height="80" Width="400" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  FontSize="40">
                 <TextBox.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="30"/>
                     </Style>
                 </TextBox.Resources>
             </TextBox>
-            <Button HorizontalAlignment="Center" Content="Jouer" VerticalAlignment="Bottom" Height="50" Width="250" Background="White" BorderBrush="Black" FontFamily="Gill Sans MT" FontSize="25" VerticalContentAlignment="Center" Margin="0,0,0,100" Click="Button_Play_Click">
+            <Button HorizontalAlignment="Center" Content="Jouer" VerticalAlignment="Bottom" Height="50" Width="250" Background="White" BorderBrush="Black"  FontSize="25" VerticalContentAlignment="Center" Margin="0,0,0,100" Click="Button_Play_Click">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="20"/>
