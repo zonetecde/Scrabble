@@ -14,6 +14,8 @@
     <None Remove="logo.png" />
     <None Remove="menu_background.jpg" />
     <None Remove="menu_background.png" />
+    <None Remove="resources\words\words.txt" />
+    <None Remove="UC\GameBoard\BlackStar.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,9 +27,32 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="resources\cursor\grab.cur" />
+    <Resource Include="resources\cursor\grabbing.cur" />
     <Resource Include="resources\menu_background.jpg" />
     <Resource Include="resources\logo.png" />
     <Resource Include="resources\login_background.png" />
+    <EmbeddedResource Include="words.txt" />
+    <Resource Include="UC\GameBoard\BlackStar.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="resources\words\" />
   </ItemGroup>
 
 </Project>

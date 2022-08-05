@@ -3,23 +3,49 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Scrabble"
+        xmlns:local="clr-namespace:Scrabble" xmlns:sp_rightpart="clr-namespace:Scrabble.UC.SP_rightPart"
         mc:Ignorable="d"
         Title="Scrabble" MinHeight="700" MinWidth="933" WindowStartupLocation="CenterScreen" WindowState="Maximized" FontFamily="Gill Sans MT" SizeToContent="Manual" SizeChanged="Window_SizeChanged" Loaded="Window_Loaded" >
     <Grid>
         <Grid Visibility="Visible" x:Name="grid_Game">
-            <StackPanel x:Name="stackPanel_leftPart" Width="200" HorizontalAlignment="Left" Background="#FFFBE3E3">
+            <StackPanel x:Name="stackPanel_leftPart" Width="200" HorizontalAlignment="Left" Background="#FFFBE3E3" Visibility="Collapsed">
 
             </StackPanel>
 
-            <WrapPanel Width="512" Height="512" x:Name="gameBoard" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF212121"/>
+            <WrapPanel Width="512" Height="512" x:Name="wrapPanel_gameBoard" HorizontalAlignment="Left" VerticalAlignment="Center" Background="#FFEFECE3" Margin="30,0,0,0"/>
+            <Border Width="512" x:Name="border_Message" Background="#E5FF0000" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,20,0,0" CornerRadius="25,25,25,25" Visibility="Hidden">
+                <TextBlock x:Name="label_message"  FontSize="25" Text="Le mot n'existe pas !" Margin="0,10,0,10" Foreground="White" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <!-- #FFFBE3E3 -->
+            <Grid  MouseEnter="Grid_rightPart_MouseEnter" x:Name="stackPanel_rightPart" Width="380" HorizontalAlignment="Right"  Background="#66E3F9FF">
+                <StackPanel>
+                    <StackPanel>
+                        <Border Background="#FFD8CDFF" CornerRadius="20,20,20,20" Margin="10,10,10,10">
+                            <StackPanel x:Name="stackPanel_players">
+                                <Label Content="Joueurs :" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,15,0,5" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
 
-            <StackPanel x:Name="stackPanel_rightPart" Width="200" HorizontalAlignment="Right"  Background="#FFFBE3E3">
+                    <Border VerticalAlignment="Stretch" Margin="60,50,60,50" Height="100" Background="#7FFFFFFF" BorderBrush="Black" BorderThickness="0.3,0.3,0.3,0.3" CornerRadius="20,20,20,20" MouseLeave="Border_Lettres_MouseLeave">
+                        <local:AlignableWrapPanel x:Name="wrapPanel_Lettre" HorizontalContentAlignment="Center" VerticalAlignment="Center" MouseEnter="wrapPanel_Lettre_MouseEnter"/>
+                   
+                        
+                    </Border>
+
+                    <Button Content="Valider" Height="80" Width="300" Background="#FFFFFCF5" BorderBrush="Black"  FontSize="30" Margin="0,50,0,0" Click="Button_ValiderSonTour_Click">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="20"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </StackPanel>
                 
-            </StackPanel>
+            </Grid>
         </Grid>
 
-        <Grid x:Name="Grid_Menu" Visibility="Visible" Background="#CC000000">
+        <Grid x:Name="Grid_Menu" Visibility="Hidden" Background="#CC000000">
             <Border HorizontalAlignment="Center" VerticalAlignment="Center" Width="800" Height="500" CornerRadius="50,50,50,50" >
                 <Border.Background>
                     <ImageBrush ImageSource="resources/menu_background.jpg"/>
@@ -48,7 +74,7 @@
                                     <ImageBrush ImageSource="/resources/menu_background.jpg"/>
                                 </Grid.Background>
 
-                                <Label Content="Combien de joueur(s) ?" VerticalAlignment="Top" HorizontalAlignment="Center"  FontSize="35" Margin="0,20,0,0"/>
+                                <Label Content="Combien de joueurs ?" VerticalAlignment="Top" HorizontalAlignment="Center"  FontSize="35" Margin="0,20,0,0"/>
                                 <Button Width="100" Height="100" Margin="73,71,317,19" Content="2" Background="#7F000000" Foreground="White" FontSize="35" Click="Button_SelectNumberOfPlayer_Click"  />
                                 <Button Width="100" Height="100" Margin="195,71,195,19" Content="3" Background="#7F000000" Foreground="White" FontSize="35" Click="Button_SelectNumberOfPlayer_Click" />
                                 <Button Width="100" Height="100" Margin="317,71,73,19" Content="4" Background="#7F000000" Foreground="White" FontSize="35" Click="Button_SelectNumberOfPlayer_Click" />
@@ -85,4 +111,11 @@
             </Button>
         </Grid>
     </Grid>
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <TextBlock x:Key="CursorGrab" Cursor="resources/cursor/grab.cur"/>
+            <TextBlock x:Key="CursorGrabbing" Cursor="resources/cursor/grabbing.cur"/>
+        </ResourceDictionary>
+    </Window.Resources>
 </Window>
