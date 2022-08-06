@@ -8,3 +8,6 @@ dotnet_diagnostic.CS8602.severity = silent
 
 # CS8604: Existence possible d'un argument de référence null.
 dotnet_diagnostic.CS8604.severity = silent
+
+# CS8601: Existence possible d'une assignation de référence null.
+dotnet_diagnostic.CS8601.severity = silent

@@ -97,13 +97,23 @@ namespace Scrabble.UC.GameBoard
                     {
                         try
                         {
-                            MainWindow.GameBoard[x, Y].Grid_Cell.Children.Add(new UserControl_Lettre(v, true)
+                            // pour pas que ça empiète sur d'autre lettres
+                            REDO:
+                            if (MainWindow.GameBoard[x, Y].IsLetter)
                             {
-                                Width = MainWindow.GameBoard[x, Y].ActualWidth,
-                                Height = MainWindow.GameBoard[x, Y].ActualWidth
-                            });
-                            MainWindow.PosLettresSelectionnees.Add(new int[] { x, Y });
-                            x++;
+                                x++;
+                                goto REDO;
+                            }
+                            else
+                            {
+                                MainWindow.GameBoard[x, Y].Grid_Cell.Children.Add(new UserControl_Lettre(v, true)
+                                {
+                                    Width = MainWindow.GameBoard[x, Y].ActualWidth,
+                                    Height = MainWindow.GameBoard[x, Y].ActualWidth
+                                });
+                                MainWindow.PosLettresSelectionnees.Add(new int[] { x, Y });
+                                x++;
+                            }
                         }
                         catch
                         {
@@ -116,15 +126,26 @@ namespace Scrabble.UC.GameBoard
                     int y = Y;
                     MainWindow.LettresSelectionnees.ToList().ForEach(v =>
                     {
+
                         try
                         {
-                            MainWindow.GameBoard[X, y].Grid_Cell.Children.Add(new UserControl_Lettre(v, true)
+                            // pour pas que ça empiète sur d'autre lettres
+                            REDO:
+                            if (MainWindow.GameBoard[X, y].IsLetter)
                             {
-                                Width = MainWindow.GameBoard[X, y].ActualWidth,
-                                Height = MainWindow.GameBoard[X, y].ActualWidth
-                            });
-                            MainWindow.PosLettresSelectionnees.Add(new int[] { X, y });
-                            y++;
+                                y++;
+                                goto REDO;
+                            }
+                            else
+                            {
+                                MainWindow.GameBoard[X, y].Grid_Cell.Children.Add(new UserControl_Lettre(v, true)
+                                {
+                                    Width = MainWindow.GameBoard[X, y].ActualWidth,
+                                    Height = MainWindow.GameBoard[X, y].ActualWidth
+                                });
+                                MainWindow.PosLettresSelectionnees.Add(new int[] { X, y });
+                                y++;
+                            }
                         }
                         catch
                         {

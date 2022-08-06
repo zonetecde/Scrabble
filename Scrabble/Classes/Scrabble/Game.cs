@@ -49,7 +49,7 @@ namespace Scrabble.Classes.Scrabble
 
             // DEVELOPPER
             WhoStart = 0;
-
+            Players[0].Lettres[0] = ' ' ;
         }
     }
 

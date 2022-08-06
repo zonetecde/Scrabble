@@ -33,7 +33,7 @@
                         
                     </Border>
 
-                    <Button Content="Valider" Height="80" Width="300" Background="#FFFFFCF5" BorderBrush="Black"  FontSize="30" Margin="0,50,0,0" Click="Button_ValiderSonTour_Click">
+                    <Button x:Name="button_Valider" Content="Valider" Height="80" Width="300" Background="#FFFFFCF5" BorderBrush="Black"  FontSize="30" Margin="0,50,0,0" Click="Button_ValiderSonTour_Click">
                         <Button.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="20"/>
