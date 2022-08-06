@@ -10,6 +10,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="gameBoard_background.jpg" />
+    <None Remove="gifloading.gif" />
     <None Remove="login_background.png" />
     <None Remove="logo.png" />
     <None Remove="menu_background.jpg" />
@@ -24,9 +26,12 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="gameBoard_background.jpg" />
+    <Resource Include="resources\gifloading.gif" />
     <Resource Include="resources\cursor\grab.cur" />
     <Resource Include="resources\cursor\grabbing.cur" />
     <Resource Include="resources\menu_background.jpg" />

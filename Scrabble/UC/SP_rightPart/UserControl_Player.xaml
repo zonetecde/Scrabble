@@ -8,8 +8,8 @@
              Height="100" d:DesignWidth="800">
     <UserControl.Background>
         <RadialGradientBrush>
-            <GradientStop x:Name="gradientStop_selected" Color="Transparent" Offset="0.36"/>
-            <GradientStop Color="Transparent" Offset="1"/>
+            <GradientStop Offset="0"/>
+            <GradientStop x:Name="gradientStop_selected"  Offset="1"/>
         </RadialGradientBrush>
     </UserControl.Background>
     <Grid>

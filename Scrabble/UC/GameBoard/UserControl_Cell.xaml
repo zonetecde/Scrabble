@@ -14,8 +14,8 @@
             </TextBlock>
 
             <Image  MouseEnter="UserControl_MouseEnter" Visibility="Hidden" x:Name="img_blackStar" Source="/UC/GameBoard/BlackStar.png" Margin="5,5,5,5"/>
-            
-            
+            <Label Width="0" Height="0"/>
+
         </Grid> 
         
         

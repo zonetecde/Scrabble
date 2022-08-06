@@ -67,7 +67,7 @@ namespace Scrabble.UC.GameBoard
             }
         }
 
-        private void UserControl_MouseEnter(object sender, MouseEventArgs e)
+        internal void UserControl_MouseEnter(object sender, MouseEventArgs e)
         {
             // MouseEnter : si c'est MainWindow.MyTurn alors on doit placer les lettres selectionner sur le GameBoard, en commençant par cette case
             if(MainWindow.MyTurn && !MainWindow.IsFixed)
@@ -157,14 +157,14 @@ namespace Scrabble.UC.GameBoard
             }
         }
 
-        private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
+        internal void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.RightButton == MouseButtonState.Pressed)
             {
                 MainWindow.IsHorizontalPlacement = !MainWindow.IsHorizontalPlacement;
                 UserControl_MouseEnter(this, null);
             }
-            else if (e.LeftButton == MouseButtonState.Pressed)
+            else if (e.LeftButton == MouseButtonState.Pressed || sender.Equals("let")) // = let lorsque on choisit des lettres alors que le mot est déjà sur la grille
             {
                 // valide le mot
                 // prend la pos de chaque lettre placé
