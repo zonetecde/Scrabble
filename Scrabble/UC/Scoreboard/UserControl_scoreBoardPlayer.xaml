@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="Scrabble.UC.Scoreboard.UserControl_scoreBoardPlayer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Scrabble.UC.Scoreboard"
+             mc:Ignorable="d" 
+             d:DesignHeight="80"  d:DesignWidth="500" FontFamily="Gill Sans MT" >
+    <Border Background="#7FFFFFFF" BorderBrush="Black" BorderThickness="2,2,2,2" CornerRadius="25,25,25,25">
+        <Grid>
+            <Label x:Name="label_name" Content="PLAYER NAME HERE" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="80,0,0,0" FontSize="25" FontWeight="Normal"/>
+            <Label x:Name="label_point" Content="999 points" HorizontalAlignment="Right" VerticalAlignment="Center" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" Margin="0,0,10,0" FontSize="25" Foreground="Red"/>
+            <Image x:Name="img_bronze" Margin="23,1,423,-1" Source="/UC/Scoreboard/bronze.png" Width="50" Visibility="Hidden"/>
+            <Image x:Name="img_silver" Margin="23,1,423,-1" Source="/UC/Scoreboard/silver.png" Width="50" Visibility="Hidden"/>
+            <Image x:Name="img_gold" Margin="23,1,423,-1" Source="/UC/Scoreboard/gold.png" Width="50" Visibility="Hidden"/>
+        </Grid>
+    </Border>
+
+</UserControl>

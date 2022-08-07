@@ -18,6 +18,8 @@ namespace Scrabble.Classes.Scrabble
         public int Round { get; set; }
         public string[,] GameBoard { get; set; }
 
+        public bool GameFinish { get; set; }
+
         public Game()
         {
         }
@@ -27,7 +29,7 @@ namespace Scrabble.Classes.Scrabble
             GameBoard = new string[15, 15];
 
             Players = players;
-
+            GameFinish = false;
             MaxPlayer = maxPlayer;
 
             Pioche = "EEEEEEEEEEEEEEEAAAAAAAAAIIIIIIIINNNNNNOOOOOORRRRRRSSSSSSTTTTTTUUUUUULLLLLDDDGGMMMBBCCPPFFHHVVJQKWXYZ  ".ToList();
@@ -49,8 +51,12 @@ namespace Scrabble.Classes.Scrabble
 
             // DEVELOPPER
             WhoStart = 0;
-            Players[0].Lettres[0] = ' ' ;
-            Players[0].Lettres[1] = ' ' ;
+            //Players[0].Lettres[0] = ' ' ;
+            //Players[0].Lettres[1] = ' ' ;
+            Pioche = new List<char>();
+            Players[0].Lettres = new List<char>() { 'L', 'E' };
+
+
         }
     }
 

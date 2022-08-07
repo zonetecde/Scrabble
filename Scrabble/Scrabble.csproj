@@ -18,6 +18,9 @@
     <None Remove="menu_background.png" />
     <None Remove="resources\words\words.txt" />
     <None Remove="UC\GameBoard\BlackStar.png" />
+    <None Remove="UC\Scoreboard\bronze.png" />
+    <None Remove="UC\Scoreboard\gold.png" />
+    <None Remove="UC\Scoreboard\silver.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,6 +42,9 @@
     <Resource Include="resources\login_background.png" />
     <EmbeddedResource Include="words.txt" />
     <Resource Include="UC\GameBoard\BlackStar.png" />
+    <Resource Include="UC\Scoreboard\bronze.png" />
+    <Resource Include="UC\Scoreboard\gold.png" />
+    <Resource Include="UC\Scoreboard\silver.png" />
   </ItemGroup>
 
   <ItemGroup>
