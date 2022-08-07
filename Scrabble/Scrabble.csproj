@@ -13,6 +13,7 @@
     <None Remove="close.jpg" />
     <None Remove="gameBoard_background.jpg" />
     <None Remove="gifloading.gif" />
+    <None Remove="icon.ico" />
     <None Remove="login_background.png" />
     <None Remove="logo.png" />
     <None Remove="menu_background.jpg" />
@@ -35,6 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="resources\icon.ico" />
     <Resource Include="resources\close.jpg" />
     <Resource Include="resources\gameBoard_background.jpg" />
     <Resource Include="resources\gifloading.gif" />

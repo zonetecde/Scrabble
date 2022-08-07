@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{11FD149B-BEB2-4E2B-8766-EC62A60DE4A0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,12 @@ Global
 		{ED1A8DA5-1EE5-465A-9A57-A173B58D46C2}.Release|ARM32.Build.0 = Release|ARM32
 		{ED1A8DA5-1EE5-465A-9A57-A173B58D46C2}.Release|x64.ActiveCfg = Release|x64
 		{ED1A8DA5-1EE5-465A-9A57-A173B58D46C2}.Release|x64.Build.0 = Release|x64
+		{11FD149B-BEB2-4E2B-8766-EC62A60DE4A0}.Debug|Any CPU.ActiveCfg = Debug
+		{11FD149B-BEB2-4E2B-8766-EC62A60DE4A0}.Debug|ARM32.ActiveCfg = Debug
+		{11FD149B-BEB2-4E2B-8766-EC62A60DE4A0}.Debug|x64.ActiveCfg = Debug
+		{11FD149B-BEB2-4E2B-8766-EC62A60DE4A0}.Release|Any CPU.ActiveCfg = Release
+		{11FD149B-BEB2-4E2B-8766-EC62A60DE4A0}.Release|ARM32.ActiveCfg = Release
+		{11FD149B-BEB2-4E2B-8766-EC62A60DE4A0}.Release|x64.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
