@@ -104,10 +104,11 @@ namespace Scrabble
 			WrapPanel_Lettres = wrapPanel_Lettre;
 			stackPanel_motVoulu = StackPanel_motVoulu;
 
+			Grid_Login.Visibility = Visibility.Visible;
 			//// à supp
-			Pseudo += rdn.Next(0, 9999);
-			Id = rdn.Next(100000000, 999999999);
-			Grid_Menu.Visibility = Visibility.Visible;
+			//Pseudo += rdn.Next(0, 9999);
+			//Id = rdn.Next(100000000, 999999999);
+			//Grid_Menu.Visibility = Visibility.Visible;
 		}
 
 		private void TimesUp(object? sender, ElapsedEventArgs e)
@@ -199,6 +200,7 @@ namespace Scrabble
 		{
 			// Demande combien de joueur doivent-ils y avoir dans la partie
 			Grid_nbJoueur.Visibility = Visibility.Visible;
+			PartiePrivée = false;
 		}
 
 		private async void Button_SelectNumberOfPlayer_Click(object sender, RoutedEventArgs e)
@@ -213,50 +215,69 @@ namespace Scrabble
 				// Pendant ce temps loading screen
 				Grid_Loading.Visibility = Visibility.Visible;
 
-				// Check si une partie est trouvé avec le nombre de joueur demandé et qui n'est pas complète
 				int max = Convert.ToInt32((sender as Button).Content);
+				label_loading.Text = string.Empty;
 
-				if (gamesFinder.Any(x => x.MaxPlayer == max) && gamesFinder.Any(x => x.MaxPlayer == max && x.Players.Count < max))
+				// enlève les games qui datent de + de 2h
+				gamesFinder.RemoveAll(x => (DateTime.Now - x.DateOfCreation).TotalHours > 2 );
+
+				if (!PartiePrivée)
 				{
-					// Une partie est trouvé, on s'ajoute dedans
-					gamesFinder.Find(x => x.MaxPlayer == max && x.Players.Count < x.MaxPlayer)
-						.Players.Add(Pseudo + "," + Id);
-
-					// On renvois la partie avec nous dedans dans le github
-					GitUtilities.ToGitghub(JsonConvert.SerializeObject(gamesFinder), "games.sc", false);
-
-					GameUrl = gamesFinder.Find(x => x.MaxPlayer == max).HostId + ".sg";
-
-					// s'ajoute au fichier game
-					Game game = JsonConvert.DeserializeObject<Game>(await GitUtilities.FromGithub(GameUrl));
-
-					// index vide pour s'ajouter
-					int indexToAdd = 1;
-					for (int i = 0; i < game.Players.Length; i++)
+					// Check si une partie est trouvé avec le nombre de joueur demandé et qui n'est pas complète et qui n'est pas une partie privé
+					if (gamesFinder.Any(x => x.MaxPlayer == max && x.Players.Count < max && !x.IsPrivate))
 					{
-						if (game.Players[i].Id == -1)
-							indexToAdd = i;
+						// Une partie est trouvé, on s'ajoute dedans
+						gamesFinder.Find(x => x.MaxPlayer == max && x.Players.Count < x.MaxPlayer && !x.IsPrivate)
+							.Players.Add(Pseudo + "," + Id);
+
+						// On renvois la partie avec nous dedans dans le github
+						GitUtilities.ToGitghub(JsonConvert.SerializeObject(gamesFinder), "games.sc", false);
+
+						GameUrl = gamesFinder.Find(x => x.MaxPlayer == max).HostId + ".sg";
+
+						// s'ajoute au fichier game
+						Game game = JsonConvert.DeserializeObject<Game>(await GitUtilities.FromGithub(GameUrl));
+
+						// index vide pour s'ajouter
+						int indexToAdd = 1;
+						for (int i = 0; i < game.Players.Length; i++)
+						{
+							if (game.Players[i].Id == -1)
+								indexToAdd = i;
+						}
+						game.Players[indexToAdd].Pseudo = Pseudo;
+						game.Players[indexToAdd].Id = Id;
+						GitUtilities.ToGitghub(JsonConvert.SerializeObject(game), GameUrl, false);
+
 					}
-					game.Players[indexToAdd].Pseudo = Pseudo;
-					game.Players[indexToAdd].Id = Id;
-					GitUtilities.ToGitghub(JsonConvert.SerializeObject(game), GameUrl, false);
+					else
+					{
+						// Créer une nouvelle game car aucune partie trouvé
+						GameFinder game = new GameFinder(Pseudo, Id, Convert.ToInt32((sender as Button).Content), new List<string>() { Pseudo + "," + Id });
+						gamesFinder.Add(game);
 
+						GitUtilities.ToGitghub(JsonConvert.SerializeObject(gamesFinder), "games.sc", false);
+
+						GitUtilities.DeleteFile(game.HostId + ".sg"); // si une game a deja existait sous ce nom
+						Game game_added = new Game(new Player[max], max, Pseudo, Id);
+						GitUtilities.ToGitghub(JsonConvert.SerializeObject(game_added), Id.ToString() + ".sg", true);
+
+						GameUrl = game.HostId + ".sg";
+					}
 				}
-				else
-				{
-					// Créer une nouvelle game car aucune partie trouvé
-					GameFinder game = new GameFinder(Pseudo, Id, Convert.ToInt32((sender as Button).Content), new List<string>() { Pseudo + "," + Id });
-					gamesFinder.Add(game);
-
+                else
+                {
+					int joinCode = rdn.Next(100_000, 999999);
+					label_loading.Text = "Code de la partie privée : \n" + joinCode.ToString().Insert(3, " ");
+					gamesFinder.Add(new GameFinder(Pseudo, Id, max, new List<string>() { Pseudo + "," + Id }, true, joinCode));
 					GitUtilities.ToGitghub(JsonConvert.SerializeObject(gamesFinder), "games.sc", false);
-
-					Game game_added = new Game(new Player[gamesFinder.Last().MaxPlayer], gamesFinder.Last().MaxPlayer, Pseudo, Id);
-					GitUtilities.ToGitghub(JsonConvert.SerializeObject(game_added), game.HostId.ToString() + ".sg", true);
-
-					GameUrl = game.HostId + ".sg";
+					
+					Game game_added = new Game(new Player[max], max, Pseudo, Id);
+					GitUtilities.ToGitghub(JsonConvert.SerializeObject(game_added), Id.ToString() + ".sg", true);
+					GameUrl = Id + ".sg";
 				}
 
-				// Lance un timer qui va détécter toutes les x secondes si la game est complète
+				// Lance un timer qui va detecter toutes les x secondes si la game est complète
 				Timer_IsGameFull.Start();
 			}
 			catch
@@ -271,7 +292,6 @@ namespace Scrabble
 			try
 			{
 				newGame = JsonConvert.DeserializeObject<Game>(await GitUtilities.FromGithub(GameUrl));
-
 
 				if (newGame.Players.Count(x => !String.IsNullOrEmpty(x.Pseudo)) == newGame.MaxPlayer)
 				{
@@ -1108,5 +1128,63 @@ namespace Scrabble
 			toR.ForEach(x => { stackPanel_players.Children.Remove(x); });
 
 		}
+
+		private bool PartiePrivée = false;
+
+        private void Button_PrivateGame_Click(object sender, RoutedEventArgs e)
+        {
+			Grid_partiePrivée.Visibility = Visibility.Visible;
+			PartiePrivée = true;
+		}
+
+		private void Button_CréerPartiePrivé_Click(object sender, RoutedEventArgs e)
+        {
+			Grid_nbJoueur.Visibility = Visibility.Visible;
+        }
+
+        private async void Button_RejoindrePartiePrivée_Click(object sender, RoutedEventArgs e)
+        {
+			try
+			{
+				List<GameFinder> gamesFinder = JsonConvert.DeserializeObject<List<GameFinder>>(await GitUtilities.FromGithub("games.sc"));
+				if (gamesFinder.Any(x => x.JoinCode == Convert.ToInt32(textBox_joinCode.Text.Replace(" ", String.Empty))))
+				{
+					Grid_Loading.Visibility = Visibility.Visible;
+					label_loading.Text = "Connexion...";
+					int index = gamesFinder.FindIndex(x => x.JoinCode == Convert.ToInt32(textBox_joinCode.Text.Replace(" ", String.Empty)));
+					gamesFinder[index].Players.Add(Pseudo + "," + Id);
+					GameUrl = gamesFinder[index].HostId + ".sg";
+
+					// s'ajoute au fichier game
+					Game game = JsonConvert.DeserializeObject<Game>(await GitUtilities.FromGithub(GameUrl));
+
+					// index vide pour s'ajouter
+					int indexToAdd = 1;
+					for (int i = 0; i < game.Players.Length; i++)
+					{
+						if (game.Players[i].Id == -1)
+							indexToAdd = i;
+					}
+					game.Players[indexToAdd].Pseudo = Pseudo;
+					game.Players[indexToAdd].Id = Id;
+					GitUtilities.ToGitghub(JsonConvert.SerializeObject(game), GameUrl, false);
+
+					Timer_IsGameFull.Start();
+				}
+				else
+				{
+					textBox_joinCode.BorderBrush = Brushes.Red;
+				}
+			}
+            catch {
+				textBox_joinCode.BorderBrush = Brushes.Red;
+			}
+		}
+
+		private void TextBox_CodePartiePrivée_KeyDown(object sender, KeyEventArgs e)
+        {
+			if (e.Key == Key.Enter)
+				Button_RejoindrePartiePrivée_Click(this, null);
+        }
     }
 }

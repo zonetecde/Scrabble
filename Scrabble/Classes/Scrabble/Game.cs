@@ -18,6 +18,8 @@ namespace Scrabble.Classes.Scrabble
         public int Round { get; set; }
         public string[,] GameBoard { get; set; }
 
+        public DateTime DateOfCreation { get; set; }
+
         public bool GameFinish { get; set; }
 
         public Game()
@@ -31,6 +33,7 @@ namespace Scrabble.Classes.Scrabble
             Players = players;
             GameFinish = false;
             MaxPlayer = maxPlayer;
+            DateOfCreation = DateTime.Now;
 
             Pioche = "EEEEEEEEEEEEEEEAAAAAAAAAIIIIIIIINNNNNNOOOOOORRRRRRSSSSSSTTTTTTUUUUUULLLLLDDDGGMMMBBCCPPFFHHVVJQKWXYZ  ".ToList();
 
@@ -50,7 +53,7 @@ namespace Scrabble.Classes.Scrabble
             Round = 1;
 
             // DEVELOPPER
-            WhoStart = 0;
+            //WhoStart = 0;
             //Players[0].Lettres[0] = ' ' ;
             //Players[0].Lettres[1] = ' ' ;
             //Pioche = new List<char>();

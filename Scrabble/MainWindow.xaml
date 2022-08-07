@@ -104,7 +104,7 @@
             </Border>
         </Grid>
 
-        <Grid x:Name="Grid_Menu" Visibility="Hidden" Background="#CC000000">
+        <Grid x:Name="Grid_Menu" Visibility="Visible" Background="#CC000000">
             <Border HorizontalAlignment="Center" VerticalAlignment="Center" Width="800" Height="500" CornerRadius="50,50,50,50" >
                 <Border.Background>
                     <ImageBrush ImageSource="resources/menu_background.jpg"/>
@@ -118,13 +118,46 @@
                             </Style>
                         </Button.Resources>
                     </Button>
-                    <Button HorizontalAlignment="Center" Content="Partie privée" VerticalAlignment="Top" Height="100" Width="400" Background="White" BorderBrush="Black"  FontSize="30" VerticalContentAlignment="Center" Margin="0,334,0,0">
+                    <Button HorizontalAlignment="Center" Content="Partie privée" VerticalAlignment="Top" Height="100" Width="400" Background="White" BorderBrush="Black"  FontSize="30" VerticalContentAlignment="Center" Margin="0,334,0,0" Click="Button_PrivateGame_Click">
                         <Button.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="20"/>
                             </Style>
                         </Button.Resources>
                     </Button>
+
+
+
+                    <Border CornerRadius="50" x:Name="Grid_partiePrivée" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#7F000000" Visibility="Hidden">
+                        <Border Width="500" Height="400" BorderBrush="Black" BorderThickness="5,5,5,5">
+                            <Grid>
+                                <Grid.Background>
+                                    <ImageBrush ImageSource="/resources/menu_background.jpg"/>
+                                </Grid.Background>
+
+                                <Label Content="Créer une partie privée" VerticalAlignment="Top" HorizontalAlignment="Center"  FontSize="35" Margin="0,20,0,0"/>
+                                <Label Content="Rejoindre une partie privée" VerticalAlignment="Top" HorizontalAlignment="Center"  FontSize="35" Margin="0,168,0,0"/>
+                                <Button HorizontalAlignment="Center" Content="Créer" VerticalAlignment="Top" Height="72" Width="216" Background="White" BorderBrush="Black"  FontSize="30" VerticalContentAlignment="Center" Margin="0,83,0,0" Click="Button_CréerPartiePrivé_Click"  >
+                                    <Button.Resources>
+                                        <Style TargetType="{x:Type Border}">
+                                            <Setter Property="CornerRadius" Value="20"/>
+                                        </Style>
+                                    </Button.Resources>
+                                </Button>
+                                <TextBox x:Name="textBox_joinCode" Margin="137,230,137,94" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" KeyDown="TextBox_CodePartiePrivée_KeyDown"/>
+                                <Button HorizontalAlignment="Center" Content="Rejoindre" VerticalAlignment="Top" Height="34" Width="216" Background="White" BorderBrush="Black"  FontSize="20" VerticalContentAlignment="Center" Margin="0,301,0,0" Click="Button_RejoindrePartiePrivée_Click"  >
+                                    <Button.Resources>
+                                        <Style TargetType="{x:Type Border}">
+                                            <Setter Property="CornerRadius" Value="20"/>
+                                        </Style>
+                                    </Button.Resources>
+                                </Button>
+                            </Grid>
+                        </Border>
+
+
+
+                    </Border>
 
                     <Border CornerRadius="50" x:Name="Grid_nbJoueur" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#7F000000" Visibility="Hidden">
                         <Border Width="500" Height="200" BorderBrush="Black" BorderThickness="5,5,5,5">
@@ -140,12 +173,15 @@
                             </Grid>
                         </Border>
 
+
+
                     </Border>
                 </Grid>
             </Border>
 
             <Grid x:Name="Grid_Loading" Visibility="Hidden" Background="#B2000000">
                 <Image gif:ImageBehavior.AnimatedSource="resources/gifloading.gif" Width="200" />
+                <TextBlock x:Name="label_loading" FontSize="40"  Margin="0,225,0,0" Text="Code pour rejoindre" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Normal" TextAlignment="Center"/>
             </Grid>
 
         </Grid>
