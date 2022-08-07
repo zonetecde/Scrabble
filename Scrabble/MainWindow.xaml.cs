@@ -917,9 +917,6 @@ namespace Scrabble
 					goto REDO;
 				}
 
-
-
-
 				// playerSuivant qui joue est
 				PASSETOUR:
 				if (newGame.WhoStart + 1 == newGame.MaxPlayer)

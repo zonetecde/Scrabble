@@ -21,6 +21,7 @@ namespace Scrabble
                 MainWindow.newGame.Players.ToList().Find(x => x.Id == MainWindow.Id).Lettres.Remove(x);  // enlève les lettres que le joueur veut changer
             });
             MainWindow.newGame.Players.ToList().Find(x => x.Id == MainWindow.Id).Lettres.AddRange(MainWindow.newGame.Pioche.Take(MainWindow.LettresSelectionnees.Length).ToList()); // ajoute les nouvelles lettre random
+            MainWindow.newGame.Pioche.RemoveRange(0, MainWindow.LettresSelectionnees.Length);
         }
 
         internal static void AfficherMesLettres(double size)
