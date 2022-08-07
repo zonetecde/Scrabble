@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="close.jpg" />
     <None Remove="gameBoard_background.jpg" />
     <None Remove="gifloading.gif" />
     <None Remove="login_background.png" />
@@ -34,7 +35,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="gameBoard_background.jpg" />
+    <Resource Include="resources\close.jpg" />
+    <Resource Include="resources\gameBoard_background.jpg" />
     <Resource Include="resources\gifloading.gif" />
     <Resource Include="resources\cursor\grab.cur" />
     <Resource Include="resources\cursor\grabbing.cur" />

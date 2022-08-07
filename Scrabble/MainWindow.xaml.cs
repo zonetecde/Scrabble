@@ -82,7 +82,7 @@ namespace Scrabble
 			// Le pseudo doit contenir que des lettres
 			textBox_pseudo.PreviewTextInput += (sender, e) =>
 			{
-				if (!System.Text.RegularExpressions.Regex.IsMatch(e.Text, "^[a-zA-Z]") || e.Text.Length > 12)
+				if (!Regex.IsMatch(e.Text, "^[a-zA-Z]") || textBox_pseudo.Text.Length > 7 || textBox_pseudo.Text.Contains(" "))
 				{
 					e.Handled = true;
 				}
@@ -182,9 +182,9 @@ namespace Scrabble
 		private void Button_Play_Click(object sender, RoutedEventArgs e)
 		{
 			// Valide le nom et affiche le menu
-			if(!String.IsNullOrEmpty(textBox_pseudo.Text))
+			if(!String.IsNullOrWhiteSpace(textBox_pseudo.Text))
 			{
-				Pseudo = textBox_pseudo.Text;
+				Pseudo = textBox_pseudo.Text.Trim();
 				Id = rdn.Next(100_000_000, 999_999_999);
 
 				Grid_Login.Visibility = Visibility.Hidden;
@@ -452,8 +452,9 @@ namespace Scrabble
 									else
 									{
 										MyTurn = false;
+										progressBar_timer.Value = 0;
 
-										if(!newGame.GameFinish)
+										if (!newGame.GameFinish)
 											Timer_whenDoIStart.Start();
 									}
 								}
@@ -721,7 +722,10 @@ namespace Scrabble
 								)
 							{
 								string direction = (!Words.Contains(finalWord_horizontal) && finalWord_horizontal.Length > 1 && !finalWord_horizontal.Contains(" ")) ? "horizontal" : "vertical";
-								messages.Add("Le mot " + direction + " " + finalWord_horizontal.Replace(" ", "?") + " n'existe pas.");
+								if(direction == "horizontal")
+									messages.Add("Le mot " + direction + " " + finalWord_horizontal.Replace(" ", "?") + " n'existe pas.");
+								else
+									messages.Add("Le mot " + direction + " " + finalWord_vertical.Replace(" ", "?") + " n'existe pas.");
 
 								isWordGood = false;
 							}
@@ -1186,5 +1190,17 @@ namespace Scrabble
 			if (e.Key == Key.Enter)
 				Button_RejoindrePartiePrivée_Click(this, null);
         }
+
+        private void Image_CloseNbJoueur_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+			// close button
+			Grid_nbJoueur.Visibility = Visibility.Hidden;
+        }
+
+        private void Image_ClosePartiePrivee_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+			// close button
+			Grid_partiePrivée.Visibility = Visibility.Hidden;
+		}
     }
 }

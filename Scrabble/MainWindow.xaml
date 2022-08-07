@@ -11,7 +11,7 @@
         <Grid Visibility="Visible" x:Name="grid_Game">
             <ProgressBar x:Name="progressBar_timer" BorderBrush="#00BCBCBC" BorderThickness="0,0,0,0" Foreground="#19FF0000" Maximum="900" >
                 <ProgressBar.Background>
-                    <ImageBrush ImageSource="/gameBoard_background.jpg" Stretch="UniformToFill"/>
+                    <ImageBrush ImageSource="resources/gameBoard_background.jpg" Stretch="UniformToFill"/>
                 </ProgressBar.Background>
             </ProgressBar>
             <Rectangle Fill="#7FFFFFFF"/>
@@ -134,6 +134,7 @@
                                 <Grid.Background>
                                     <ImageBrush ImageSource="/resources/menu_background.jpg"/>
                                 </Grid.Background>
+                                <Image Source="resources/close.jpg" VerticalAlignment="Top" HorizontalAlignment="Right" Width="40" Margin="0,5,5,0" Cursor="Hand" MouseDown="Image_ClosePartiePrivee_MouseDown" />
 
                                 <Label Content="Créer une partie privée" VerticalAlignment="Top" HorizontalAlignment="Center"  FontSize="35" Margin="0,20,0,0"/>
                                 <Label Content="Rejoindre une partie privée" VerticalAlignment="Top" HorizontalAlignment="Center"  FontSize="35" Margin="0,168,0,0"/>
@@ -145,7 +146,7 @@
                                     </Button.Resources>
                                 </Button>
                                 <TextBox x:Name="textBox_joinCode" Margin="137,230,137,94" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" KeyDown="TextBox_CodePartiePrivée_KeyDown"/>
-                                <Button HorizontalAlignment="Center" Content="Rejoindre" VerticalAlignment="Top" Height="34" Width="216" Background="White" BorderBrush="Black"  FontSize="20" VerticalContentAlignment="Center" Margin="0,301,0,0" Click="Button_RejoindrePartiePrivée_Click"  >
+                                <Button HorizontalAlignment="Center" Content="Rejoindre" VerticalAlignment="Top" Height="49" Width="216" Background="White" BorderBrush="Black"  FontSize="20" VerticalContentAlignment="Center" Margin="0,309,0,0" Click="Button_RejoindrePartiePrivée_Click"  >
                                     <Button.Resources>
                                         <Style TargetType="{x:Type Border}">
                                             <Setter Property="CornerRadius" Value="20"/>
@@ -165,6 +166,7 @@
                                 <Grid.Background>
                                     <ImageBrush ImageSource="/resources/menu_background.jpg"/>
                                 </Grid.Background>
+                                <Image Source="resources/close.jpg" VerticalAlignment="Top" HorizontalAlignment="Right" Width="40" Margin="0,5,5,0" Cursor="Hand" MouseDown="Image_CloseNbJoueur_MouseDown"/>
 
                                 <Label x:Name="label_combienDeJoueur" Content="Combien de joueurs ?" VerticalAlignment="Top" HorizontalAlignment="Center"  FontSize="35" Margin="0,20,0,0"/>
                                 <Button Width="100" Height="100" Margin="73,71,317,19" Content="2" Background="#7F000000" Foreground="White" FontSize="35" Click="Button_SelectNumberOfPlayer_Click" Cursor="Hand"  />
