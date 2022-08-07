@@ -25,7 +25,7 @@ namespace Scrabble.UC.Scoreboard
             InitializeComponent();
 
             label_name.Content = x.Pseudo;
-            label_point.Content = x.Score;
+            label_point.Content = x.Score + " point";
             if (x.Score > 1)
                 label_point.Content += "s";
 

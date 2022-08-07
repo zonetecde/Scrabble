@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Scrabble.UC.Scoreboard"
              mc:Ignorable="d" 
-             d:DesignHeight="80"  d:DesignWidth="500" FontFamily="Gill Sans MT" >
-    <Border Background="#7FFFFFFF" BorderBrush="Black" BorderThickness="2,2,2,2" CornerRadius="25,25,25,25">
+             d:DesignHeight="80"  d:DesignWidth="500" FontFamily="Gill Sans MT" Margin="0,0,0,20" >
+    <Border Background="#7FFFFFFF" BorderBrush="Black" BorderThickness="1,1,1,1" CornerRadius="25,25,25,25">
         <Grid>
             <Label x:Name="label_name" Content="PLAYER NAME HERE" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="80,0,0,0" FontSize="25" FontWeight="Normal"/>
             <Label x:Name="label_point" Content="999 points" HorizontalAlignment="Right" VerticalAlignment="Center" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" Margin="0,0,10,0" FontSize="25" Foreground="Red"/>

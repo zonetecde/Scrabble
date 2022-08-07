@@ -53,8 +53,8 @@ namespace Scrabble.Classes.Scrabble
             WhoStart = 0;
             //Players[0].Lettres[0] = ' ' ;
             //Players[0].Lettres[1] = ' ' ;
-            Pioche = new List<char>();
-            Players[0].Lettres = new List<char>() { 'L', 'E' };
+            //Pioche = new List<char>();
+            //Players[0].Lettres = new List<char>() { 'L', 'E' };
 
 
         }

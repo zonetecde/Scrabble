@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using Newtonsoft.Json;
 using Scrabble.Classes.GameBoard;
 using Scrabble.Classes.Menu;
@@ -270,6 +271,74 @@ namespace Scrabble
 			try
 			{
 				newGame = JsonConvert.DeserializeObject<Game>(await GitUtilities.FromGithub(GameUrl));
+
+
+				if (newGame.Players.Count(x => !String.IsNullOrEmpty(x.Pseudo)) == newGame.MaxPlayer)
+				{
+					Timer_IsGameFull.Stop();
+
+					// Supprime la game de games.sc
+					List<GameFinder> gamesFinder = JsonConvert.DeserializeObject<List<GameFinder>>(await GitUtilities.FromGithub("games.sc"));
+					gamesFinder.RemoveAll(x => x.Players.Any(y => y == Pseudo + "," + Id));
+					GitUtilities.ToGitghub(JsonConvert.SerializeObject(gamesFinder), "games.sc", false);
+
+					// Start la game
+					this.Dispatcher.Invoke(() =>
+					{
+						Grid_Loading.Visibility = Visibility.Hidden;
+						Grid_nbJoueur.Visibility = Visibility.Hidden;
+						Grid_Menu.Visibility = Visibility.Hidden;
+						grid_Game.Visibility = Visibility.Visible;
+
+						// Ajoute le nom des joueurs à la game
+						newGame.Players.ToList().ForEach(x =>
+						{
+							stackPanel_players.Children.Add(new UserControl_Player(x));
+
+							// Lui qui commence
+							if (newGame.WhoStart == newGame.Players.ToList().IndexOf(x))
+							{
+								(stackPanel_players.Children[stackPanel_players.Children.Count - 1] as UserControl_Player)
+									.gradientStop_selected.Color = (Color)ColorConverter.ConvertFromString(COLOR_CURRENT_PLAYER);
+
+								if (x.Id.Equals(Id))
+								{
+									// Moi qui commence
+									MyTurn = true;
+									Timer_MyTime.Start();
+									Timer_MyTime_TotalElapsed = 0;
+									progressBar_timer.Value = 0;
+								}
+								else
+								{
+									// Pas moi qui commence
+									button_Valider.Visibility = Visibility.Hidden;
+									button_echangerLettre.Visibility = Visibility.Hidden;
+									Button_PasserSonTour.Visibility = Visibility.Hidden;
+									// Lance le chronomètre pour savoir quand je commence
+									Timer_whenDoIStart.Start();
+								}
+							}
+						});
+
+						// Créer le tableau de jeu
+						DrawGameBoard();
+
+						// Affiche les lettres du joueur
+						GameUtilities.AfficherMesLettres(wrapPanel_gameBoard.Width / (double)15);
+
+						// Ajoute les mots
+						var assembly = Assembly.GetExecutingAssembly();
+						string resourceName = assembly.GetManifestResourceNames()
+						  .Single(str => str.EndsWith("words.txt"));
+
+						using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+						using (StreamReader reader = new StreamReader(stream))
+						{
+							Words = reader.ReadToEnd().Split(' ').ToList();
+						}
+					});
+				}
 			}
 			catch
 			{
@@ -282,72 +351,6 @@ namespace Scrabble
 				});
 			}
 
-			if(newGame.Players.Count(x => !String.IsNullOrEmpty(x.Pseudo)) == newGame.MaxPlayer)
-			{
-				Timer_IsGameFull.Stop();
-
-				// Supprime la game de games.sc
-				List<GameFinder> gamesFinder = JsonConvert.DeserializeObject<List<GameFinder>>(await GitUtilities.FromGithub("games.sc"));
-				gamesFinder.RemoveAll(x => x.HostId == newGame.Players[0].Id);
-				GitUtilities.ToGitghub(JsonConvert.SerializeObject(gamesFinder), "games.sc", false);
-
-				// Start la game
-				this.Dispatcher.Invoke(() =>
-				{
-					Grid_Loading.Visibility = Visibility.Hidden;
-					Grid_nbJoueur.Visibility = Visibility.Hidden;
-					Grid_Menu.Visibility = Visibility.Hidden;
-					grid_Game.Visibility = Visibility.Visible;
-
-					// Ajoute le nom des joueurs à la game
-					newGame.Players.ToList().ForEach(x =>
-					{
-						stackPanel_players.Children.Add(new UserControl_Player(x));
-
-						// Lui qui commence
-						if (newGame.WhoStart == newGame.Players.ToList().IndexOf(x))
-						{
-							(stackPanel_players.Children[stackPanel_players.Children.Count - 1] as UserControl_Player)
-								.gradientStop_selected.Color = (Color)ColorConverter.ConvertFromString(COLOR_CURRENT_PLAYER);
-
-							if (x.Id.Equals(Id))
-							{
-								// Moi qui commence
-								MyTurn = true;
-								Timer_MyTime.Start();
-								Timer_MyTime_TotalElapsed = 0;
-								progressBar_timer.Value = 0;
-							}
-							else
-							{
-								// Pas moi qui commence
-								button_Valider.Visibility = Visibility.Hidden;
-								button_echangerLettre.Visibility = Visibility.Hidden;
-								Button_PasserSonTour.Visibility = Visibility.Hidden;
-								// Lance le chronomètre pour savoir quand je commence
-								Timer_whenDoIStart.Start();
-							}
-						}
-					});
-
-					// Créer le tableau de jeu
-					DrawGameBoard();
-
-					// Affiche les lettres du joueur
-					GameUtilities.AfficherMesLettres(wrapPanel_gameBoard.Width / (double)15);
-
-					// Ajoute les mots
-					var assembly = Assembly.GetExecutingAssembly();
-					string resourceName = assembly.GetManifestResourceNames()
-					  .Single(str => str.EndsWith("words.txt"));
-
-					using (Stream stream = assembly.GetManifestResourceStream(resourceName))
-					using (StreamReader reader = new StreamReader(stream))
-					{
-						Words = reader.ReadToEnd().Split(' ').ToList();
-					}
-				});
-			}
 		}
 
 
@@ -470,6 +473,22 @@ namespace Scrabble
 				stackPanel_ScoreBoard.Children.Add(new UserControl_scoreBoardPlayer(index, x));
 				index++;
 			});
+
+			// delete the game after 10 seconds
+			Grid_nbJoueur.IsEnabled = false;
+			label_combienDeJoueur.Content = "Veuillez patientez un instant...";
+			Timer t = new Timer(13000);
+			t.Elapsed += (sender, e) =>
+			{
+				Dispatcher.Invoke(() =>
+				{
+					t.Stop();
+					GitUtilities.DeleteFile(GameUrl);
+					Grid_nbJoueur.IsEnabled = true;
+					label_combienDeJoueur.Content = "Combien de joueurs ?";
+				});
+			};
+			t.Start();
 		}
 
         private void DrawGameBoard()
@@ -928,10 +947,12 @@ namespace Scrabble
 				Timer_MyTime.Stop();
 				progressBar_timer.Value = 0;
 
-				if(!newGame.GameFinish)
+				if (!newGame.GameFinish)
 					Timer_whenDoIStart.Start();
 				else
+				{
 					GameFinish();
+				}
 			}
 			else
 			{
@@ -993,7 +1014,7 @@ namespace Scrabble
 		}
 
 		private async void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-		{
+		{			
 			// s'enlève des fichiers github si il cherchait une game
 			if (Timer_IsGameFull.Enabled)
 			{
@@ -1040,22 +1061,52 @@ namespace Scrabble
         {
 			var image = GameUtilities.CreateBitmapSourceFromVisual(wrapPanel_gameBoard.Width, wrapPanel_gameBoard.Height, wrapPanel_gameBoard, false);
 
-			//using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
-			//{
-			//	System.Windows.Forms.DialogResult result = dialog.ShowDialog();
-			//}
+			var dialog = new CommonOpenFileDialog();
+			dialog.IsFolderPicker = true;
+			CommonFileDialogResult result = dialog.ShowDialog();
+			
+			if(result == CommonFileDialogResult.Ok)
+            {
+				using (var fileStream = new FileStream(dialog.FileName + @"\plateau " + DateTime.Now.ToString("dd MM yyyy") +".png", FileMode.Create))
+				{
+					BitmapEncoder encoder = new PngBitmapEncoder();
+					encoder.Frames.Add(BitmapFrame.Create(image));
+					encoder.Save(fileStream);
 
-			//using (var fileStream = new FileStream(filePath, FileMode.Create))
-			//{
-			//	BitmapEncoder encoder = new PngBitmapEncoder();
-			//	encoder.Frames.Add(BitmapFrame.Create(image));
-			//	encoder.Save(fileStream);
-			//}
-		}
+					MessageBox.Show("Le plateau a été enregistré!", "Information");
+				}
+			}
+
+
+        }
 
         private void Button_RetournerAuMenu_Click(object sender, RoutedEventArgs e)
         {
+			GameBoard = null;
+			Grid_gameFinish.Visibility = Visibility.Hidden;
+			Grid_nbJoueur.Visibility = Visibility.Hidden;
+			Grid_Menu.Visibility = Visibility.Visible;
+			wrapPanel_gameBoard.Children.Clear();
+			wrapPanel_Lettre.Children.Clear();
+			ActualRound = 0;
+			Words.Clear();
+			MesLettres = null;
+			GameUrl = null;
+			MyTurn = false;
+			IsFixed = false;
+			PosLettresSelectionnees = new List<int[]>(); 
+			LettresSelectionnees = string.Empty;
+			button_echangerLettre.Visibility = Visibility.Visible;
+			button_Valider.Visibility = Visibility.Visible;
+			Button_PasserSonTour.Visibility = Visibility.Visible;
 
-        }
+			List<UIElement> toR = new List<UIElement>();
+            foreach (var item in stackPanel_players.Children)
+            
+				if (item is UserControl_Player)
+					toR.Add(item as UserControl_Player);
+			toR.ForEach(x => { stackPanel_players.Children.Remove(x); });
+
+		}
     }
 }

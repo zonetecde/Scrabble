@@ -42,7 +42,7 @@
 
                         </Border>
 
-                        <Button x:Name="button_Valider" Content="Valider" Height="80" Width="300" Background="#FFFFFCF5" BorderBrush="Black"  FontSize="30" Margin="0,0,0,0" Click="Button_ValiderSonTour_Click">
+                        <Button x:Name="button_Valider" Content="Valider" Height="80" Width="300" Background="#FFC2ECCA" BorderBrush="Black"  FontSize="30" Margin="0,0,0,0" Click="Button_ValiderSonTour_Click">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="20"/>
@@ -76,14 +76,14 @@
             </Grid>
         </Grid>
 
-        <Grid x:Name="Grid_gameFinish" Background="#66000000">
+        <Grid x:Name="Grid_gameFinish" Background="#66000000" Visibility="Hidden">
             <Border Width="700" Height="500" BorderBrush="Black" BorderThickness="3,3,3,3" CornerRadius="50,50,50,50">
                 <Border.Background>
                     <ImageBrush ImageSource="/resources/menu_background.jpg" Stretch="UniformToFill"/>
                 </Border.Background>
                 <Grid >
                     <Label Content="La partie est terminé !" HorizontalAlignment="Center" VerticalAlignment="Top" VerticalContentAlignment="Top" HorizontalContentAlignment="Center" FontSize="40" Margin="0,50,0,0"/>
-                    <ScrollViewer HorizontalAlignment="Center" VerticalAlignment="Top" Width="500" Height="276" VerticalScrollBarVisibility="Auto" Background="#7FFFFFFF" BorderBrush="Black" BorderThickness="1,1,1,1" Margin="0,121,0,0">
+                    <ScrollViewer HorizontalAlignment="Center" VerticalAlignment="Top" Width="500" Height="276" VerticalScrollBarVisibility="Auto" Background="#00000000" BorderBrush="Black" BorderThickness="1,1,1,1" Margin="0,121,0,0">
                         <StackPanel x:Name="stackPanel_ScoreBoard"/>
                     </ScrollViewer>
                     <Button Content="Enregistrer le plateau" Height="50" Width="225" Background="White" BorderBrush="Black"  FontSize="19" Margin="97,424,372,20" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="Button_EnregistrerLePlateau_Click" >
@@ -133,7 +133,7 @@
                                     <ImageBrush ImageSource="/resources/menu_background.jpg"/>
                                 </Grid.Background>
 
-                                <Label Content="Combien de joueurs ?" VerticalAlignment="Top" HorizontalAlignment="Center"  FontSize="35" Margin="0,20,0,0"/>
+                                <Label x:Name="label_combienDeJoueur" Content="Combien de joueurs ?" VerticalAlignment="Top" HorizontalAlignment="Center"  FontSize="35" Margin="0,20,0,0"/>
                                 <Button Width="100" Height="100" Margin="73,71,317,19" Content="2" Background="#7F000000" Foreground="White" FontSize="35" Click="Button_SelectNumberOfPlayer_Click" Cursor="Hand"  />
                                 <Button Width="100" Height="100" Margin="195,71,195,19" Content="3" Background="#7F000000" Foreground="White" FontSize="35" Click="Button_SelectNumberOfPlayer_Click" Cursor="Hand"/>
                                 <Button Width="100" Height="100" Margin="317,71,73,19" Content="4" Background="#7F000000" Foreground="White" FontSize="35" Click="Button_SelectNumberOfPlayer_Click" Cursor="Hand"/>
