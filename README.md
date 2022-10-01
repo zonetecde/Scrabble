@@ -3,7 +3,7 @@
 Ce logiciel vous permettra de jouer au célèbre jeu du scrabble en ligne contre d'autres vrais joueurs en temps réel.
 
 Vous avez aussi la possibilité de créer une partie privée pour jouer contre vos amis jusqu'à 4!
-
+![Partie publique](https://user-images.githubusercontent.com/56195432/183410034-196127d3-20a8-4235-a17f-0321dd547808.png)
 ![Partie privée](https://user-images.githubusercontent.com/56195432/183312859-3f87ff79-3abc-476a-8052-9c64f7a28611.png)
 ![Partie privée](https://user-images.githubusercontent.com/56195432/183312870-48c3abb5-48f1-4369-b088-8cc8536b8044.png)
 
