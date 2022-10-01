@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
-        xmlns:local="clr-namespace:Scrabble" xmlns:sp_rightpart="clr-namespace:Scrabble.UC.SP_rightPart"
+        xmlns:local="clr-namespace:Scrabble.Utilities" xmlns:sp_rightpart="clr-namespace:Scrabble.UC.SP_rightPart"
         mc:Ignorable="d"
         Title="Scrabble" MinHeight="700" MinWidth="933" WindowStartupLocation="CenterScreen" WindowState="Maximized" FontFamily="Gill Sans MT" SizeToContent="Manual" SizeChanged="Window_SizeChanged" Loaded="Window_Loaded" Closing="Window_Closing" Icon="resources/icon.ico" >
     <Grid>

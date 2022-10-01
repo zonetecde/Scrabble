@@ -7,6 +7,7 @@ using Scrabble.Classes.Scrabble;
 using Scrabble.UC.GameBoard;
 using Scrabble.UC.Scoreboard;
 using Scrabble.UC.SP_rightPart;
+using Scrabble.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,13 +29,13 @@ using System.Windows.Shapes;
 
 namespace Scrabble
 {
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
-	public partial class MainWindow : Window
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
 	{
 		// color
-		private const string COLOR_LETTER_FIX = "#FFEFFFE5";
+		internal static string COLOR_LETTER_FIX = "#FFEFFFE5";
 		private const string COLOR_LETTER_JOCKER = "#FFFFFF00";
 		private const string COLOR_CURRENT_PLAYER = "#B2D0F9D5";
 		private const string COLOR_TRANSPARENT = "#00FFFFFF";
@@ -233,7 +234,7 @@ namespace Scrabble
 						// On renvois la partie avec nous dedans dans le github
 						GitUtilities.ToGitghub(JsonConvert.SerializeObject(gamesFinder), "games.sc", false);
 
-						GameUrl = gamesFinder.Find(x => x.MaxPlayer == max).HostId + ".sg";
+						GameUrl = gamesFinder.Find(x => x.MaxPlayer == max && !x.IsPrivate && x.Players.Any(x=> x.Equals(Pseudo + "," + Id))).HostId + ".sg";
 
 						// s'ajoute au fichier game
 						Game game = JsonConvert.DeserializeObject<Game>(await GitUtilities.FromGithub(GameUrl));

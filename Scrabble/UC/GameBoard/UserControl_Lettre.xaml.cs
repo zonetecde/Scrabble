@@ -63,7 +63,7 @@ namespace Scrabble.UC.GameBoard
             this.Cursor = MainWindow.Grab;
 
             // veut séléctionner non pas bouger
-            if(!mouseHavedMove && !IsTemp)
+            if(!mouseHavedMove && !IsTemp && this.gradientStop_contour.Color != (Color)ColorConverter.ConvertFromString(MainWindow.COLOR_LETTER_FIX))
             {
                 // séléctionne / déselectionne la lettre
                 gradientStop_contour.Color = gradientStop_contour.Color == (Color)ColorConverter.ConvertFromString("#FFFFC78F") ? gradientStop_contour.Color = (Color)ColorConverter.ConvertFromString("#FFEEE5FF") : gradientStop_contour.Color = (Color)ColorConverter.ConvertFromString("#FFFFC78F");
@@ -139,7 +139,7 @@ namespace Scrabble.UC.GameBoard
         private void UserControl_MouseLeave(object sender, MouseEventArgs e)
         {
             // interchange avec l'autre lettre leur place
-            if(isGrabbing)
+            if(isGrabbing && gradientStop_contour.Color != (Color)ColorConverter.ConvertFromString(MainWindow.COLOR_LETTER_FIX))
             {
                 if (direction == 1)
                 {

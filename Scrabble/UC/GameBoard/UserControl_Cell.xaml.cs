@@ -159,12 +159,12 @@ namespace Scrabble.UC.GameBoard
 
         internal void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.RightButton == MouseButtonState.Pressed)
+            if (e.RightButton == MouseButtonState.Pressed && MainWindow.MyTurn)
             {
                 MainWindow.IsHorizontalPlacement = !MainWindow.IsHorizontalPlacement;
                 UserControl_MouseEnter(this, null);
             }
-            else if (e.LeftButton == MouseButtonState.Pressed || sender.Equals("let")) // = let lorsque on choisit des lettres alors que le mot est déjà sur la grille
+            else if ((e.LeftButton == MouseButtonState.Pressed || sender.Equals("let")) && MainWindow.MyTurn) // = let lorsque on choisit des lettres alors que le mot est déjà sur la grille
             {
                 // valide le mot
                 // prend la pos de chaque lettre placé
