@@ -1,3 +1,6 @@
+## NOTE :
+Le logiciel ne fonctionne actuellement plus car les clés API utilisées ont expiré.
+
 # Scrabble
 
 Ce logiciel vous permettra de jouer au célèbre jeu du scrabble en ligne contre d'autres vrais joueurs en temps réel.
